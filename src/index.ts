@@ -13,6 +13,17 @@ import { DeleteEstudanteController } from "./controllers/delete-estudante/delete
 import { MongoGetEstudanteRepository } from "./repositories/get-estudante/mongo-get-estudante";
 import { GetEstudanteController } from "./controllers/get-estudante/get-estudante";
 
+import { GetFlashcardsController } from "./controllers/get-flashcards/get-flashcards";
+import { MongoGetFlashcardsRepository } from "./repositories/get-flashcards/mongo-get-flashcards";
+import { MongoCreateFlashcardRepository } from "./repositories/create-flashcard/mongo-create-flashcard";
+import { CreateFlashcardController } from "./controllers/create-flashcard/create-flashcard";
+import { MongoUpdateFlashcardRepository } from "./repositories/update-flashcard/mongo-update-flashcard";
+import { UpdateFlashcardController } from "./controllers/update-flashcard/update-flashcard";
+import { MongoDeleteFlashcardRepository } from "./repositories/delete-flashcard/mongo-delete-flashcard";
+import { DeleteFlashcardController } from "./controllers/delete-flashcard/delete-flashcard";
+import { MongoGetFlashcardRepository } from "./repositories/get-flashcard/mongo-get-flashcard";
+import { GetFlashcardController } from "./controllers/get-flashcard/get-flashcard";
+
 const main = async () => {
   config();
 
@@ -103,6 +114,77 @@ const main = async () => {
 
     const { body, statusCode } = await getEstudanteController.handle({
       body: req.body,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.get("/flashcards/:email", async (req, res) => {
+    const mongoGetFlashcardsRepository = new MongoGetFlashcardsRepository();
+
+    const getFlashcardsController = new GetFlashcardsController(
+      mongoGetFlashcardsRepository
+    );
+
+    const { body, statusCode } = await getFlashcardsController.handle({
+      params: req.params,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.get("/flashcards/:pergunta", async (req, res) => {
+    const mongoGetFlashcardRepository = new MongoGetFlashcardRepository();
+
+    const getFlashcardController = new GetFlashcardController(
+      mongoGetFlashcardRepository
+    );
+
+    const { body, statusCode } = await getFlashcardController.handle({
+      params: req.params,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.post("/flashcards", async (req, res) => {
+    const mongoCreateFlashcardRepository = new MongoCreateFlashcardRepository();
+
+    const createFlashcardController = new CreateFlashcardController(
+      mongoCreateFlashcardRepository
+    );
+
+    const { body, statusCode } = await createFlashcardController.handle({
+      body: req.body,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.patch("/flashcards/:pergunta", async (req, res) => {
+    const mongoUpdateFlashcardRepository = new MongoUpdateFlashcardRepository();
+
+    const updateFlashcardController = new UpdateFlashcardController(
+      mongoUpdateFlashcardRepository
+    );
+
+    const { body, statusCode } = await updateFlashcardController.handle({
+      params: req.params,
+      body: req.body,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.delete("/flashcards/:pergunta", async (req, res) => {
+    const mongoDeleteFlashcardRepository = new MongoDeleteFlashcardRepository();
+
+    const deleteFlashcardController = new DeleteFlashcardController(
+      mongoDeleteFlashcardRepository
+    );
+
+    const { body, statusCode } = await deleteFlashcardController.handle({
+      params: req.params,
     });
 
     res.status(statusCode).send(body);

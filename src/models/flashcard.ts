@@ -1,18 +1,19 @@
-import { Date } from "date-fns";
+import "date-fns";
 
-export interface FlashCard {
-  Pergunta: string;
-  Resposta: string;
-  DataUltimaVisualizacao: Date | null;
+export interface IFlashCard {
+  pergunta: string;
+  resposta: string;
+  dataUltimaVisualizacao: Date | null;
   caixaId: number;
-  QtdePontos: number;
-  Status: string;
+  qtdPontos: number;
+  status: string;
 }
 
 export class FlashCard {
   private pergunta: string;
   private resposta: string;
   private dataUltimaVisualizacao: Date | null;
+  private caixaId: number;
 
   private qtdePontos: number;
   private status: string;
@@ -101,5 +102,16 @@ export class FlashCard {
   }
   getStatus(): string {
     return this.status;
+  }
+
+  retornarDadosFlashcard(): IFlashCard{
+    return{
+      pergunta: this.pergunta,
+      resposta: this.resposta,
+      dataUltimaVisualizacao: this.dataUltimaVisualizacao,
+      caixaId: this.caixaId,
+      qtdPontos: this.qtdePontos,
+      status: this.status
+    }
   }
 }
